@@ -1,25 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
-
-function App() {
+import { connect } from 'react-redux';
+import { incrementAction, decrementAction } from './redux/actions';
+function App({increaseFunction, decreaseFunction, counter}) {
+console.log(counter)
+/*   const increaseFunction () =>{uhñcdp} */
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={increaseFunction}>increase</button>
+      <p>{counter}</p>
+      <button onClick={decreaseFunction}>decrease</button>
     </div>
   );
 }
+// => 2. una para dispatch una action
+function mapDispatchToProps(dispatch) {
+  // dispatch 2 actions
+  return {
+    increaseFunction: () => dispatch(incrementAction()),
+    decreaseFunction: () => dispatch(decrementAction())
+  }
+}
+// => 1. una para recibir el state
+function mapStateToProps(state) {
+  return{
+    counter: state.count
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
-export default App;
+
+// store
+// connectar el store con el provider
+// reducer con los reducer
+// connect tu componente y anadir mapStateToprop, y/o mapDispatchToProps  
+// crear las acciones dentro del accion creator
+// y por cada action hay que definir la function dentro de mapDispatchToprops
